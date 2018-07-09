@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 import {Platform,StyleSheet,Text,View
 } from 'react-native';
+import MainComponent from './Component/MainComponent';
 
 export default class App extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-      </View>
+      <MainComponent/>
     );
   }
 }
