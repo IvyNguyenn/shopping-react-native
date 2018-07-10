@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import {Platform,StyleSheet,Text,View
-} from 'react-native';
+import {Platform,StyleSheet,Text,View} from 'react-native';
 import MainComponent from './Component/MainComponent';
 
 export default class App extends Component {
   render() {
+    console.disableYellowBox = true;
     return (
       <MainComponent/>
     );
