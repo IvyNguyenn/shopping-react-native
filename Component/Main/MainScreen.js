@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { View, Text, StyleSheet, Button, Image, Dimensions, TouchableOpacity } from 'react-native'
+import React, { Component } from 'react';
+import { View, Text, StyleSheet, Button, Image, Dimensions, TouchableOpacity } from 'react-native';
 import TabNavigator from 'react-native-tab-navigator';
 import Drawer from 'react-native-drawer';
 import { main_color, app_name, } from '../../Values';
@@ -8,6 +8,7 @@ import ic_menu from '../../Images/Icon/icons8_Menu_50px_1.png';
 import HomeScreen from './HomeScreen';
 import Menu from './Menu';
 import Shop from './Shop/Shop'
+import Header from '../Main/Shop/Header'
 
 const { screen_height } = Dimensions.get('window');
 

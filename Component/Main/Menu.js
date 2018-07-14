@@ -1,36 +1,47 @@
 import React, { Component } from 'react';
-import { View, Button, StyleSheet, Image ,Text} from 'react-native'
+import { View, Button, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
 import { main_color, app_name, light_gray } from '../../Values';
-import avatar from '../../Images/Icon/icons8_User_50px_1.png';
+import avatar from '../../Images/Icon/icons8_User_50px_2.png';
 
 export default class Menu extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isLogin: true,
+        }
+    }
     render() {
+        const LogoutJSX = (
+
+            <View style={styles.containerCenter}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("AUTHENTICATION")} >
+                    <Text style={styles.textButtonStyle}>Sign in</Text>
+                </TouchableOpacity>
+            </View>
+        );
+
+        const LoginJSX = (
+
+            <View style={styles.containerCenter}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("ORDER_HISTORY")}>
+                    <Text style={styles.textButtonStyle}>Order history</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("CHANGE_INFO")}>
+                    <Text style={styles.textButtonStyle}>Change info</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => { this.props.navigation.navigate('AUTHENTICATION') }}>
+                    <Text style={styles.textButtonStyle}>Sign out</Text>
+                </TouchableOpacity>
+            </View>
+        );
+        const mainJSX = this.state.isLogin ? LoginJSX : LogoutJSX;
         return (
             <View style={styles.container}>
                 <View style={styles.containerAlignCenter}>
                     <Image source={avatar} style={styles.imageStyle} />
-                    <Text>Username</Text>
+                    <Text style={styles.usernameStyle}>Username</Text>
                 </View>
-                <View style={styles.containerCenter}>
-                    <View style={styles.rowStyle}>
-                        <Button
-                            title='go to authentication'
-                            onPress={() => this.props.navigation.navigate("AUTHENTICATION")}
-                        />
-                    </View>
-                    <View style={styles.rowStyle}>
-                        <Button
-                            title='go to change_info'
-                            onPress={() => this.props.navigation.navigate("CHANGE_INFO")}
-                        />
-                    </View>
-                    <View style={styles.rowStyle}>
-                        <Button
-                            title='go to order history'
-                            onPress={() => this.props.navigation.navigate("ORDER_HISTORY")}
-                        />
-                    </View>
-                </View>
+                {mainJSX}
             </View>
         );
     }
@@ -39,13 +50,11 @@ export default class Menu extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: light_gray,
+        backgroundColor: main_color,
         padding: 10,
     },
     containerCenter: {
-        backgroundColor: light_gray,
         justifyContent: 'center',
-        padding: 10,
     },
     containerAlignCenter: {
         alignItems: 'center',
@@ -57,10 +66,20 @@ const styles = StyleSheet.create({
     imageStyle: {
         width: 100,
         height: 100,
-        borderWidth: 1,
         borderColor: 'white',
         borderRadius: 100,
-        justifyContent: 'center',
-        alignItems: 'center',
-    }
+    },
+    textButtonStyle: {
+        backgroundColor: 'white',
+        color: main_color,
+        borderRadius: 5,
+        paddingHorizontal: 10,
+        paddingVertical: 15,
+        marginVertical: 5,
+
+    },
+    usernameStyle: {
+        color: 'white',
+        fontSize: 20,
+    },
 });

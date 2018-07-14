@@ -1,12 +1,33 @@
 import React, { Component } from 'react';
-import  { View ,Text} from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
+import { createStackNavigator, StackNavigator } from 'react-navigation';
+import HomeView from './HomeView';
+import ListProduct from '../ListProduct/ListProduct';
+import ProductDetail from '../ProductDetail/ProductDetail';
 
-export default class Home extends Component{
-    render(){
-        return(
-            <View>
-                <Text> HOME </Text>
-                </View>
+const RootStack = createStackNavigator(
+    { 
+        HOME_VIEW: HomeView,
+        LIST_PRODUCT: ListProduct,
+        PRODUCT_DETAIL: ProductDetail,
+    },
+    {
+        headerMode: 'none',
+    },
+    {
+        initialRountName: 'HOME_VIEW'
+    },
+);
+
+export default class Home extends Component {
+    render() {
+        return (
+            <RootStack />
         );
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+    }
+});

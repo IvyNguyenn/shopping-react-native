@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TextInput, Image, Dimensions, TouchableOpacity } from 'react-native';
 import { main_color, app_name, } from '../../Values';

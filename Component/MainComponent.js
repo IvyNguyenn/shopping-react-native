@@ -1,14 +1,14 @@
-import React, { Component } from 'react'
-import { View, Text, StyleSheet, } from 'react-native'
+import React, { Component } from 'react';
+import { View, Text, StyleSheet, } from 'react-native';
 import { createStackNavigator, StackNavigator } from 'react-navigation';
 import MainScreen from './Main/MainScreen';
-import Authentication from './Authentication/Authentication'
+import Authentication from './Authentication/Authentication';
 import ChangeInfo from './ChangeInfo/ChangeInfo';
 import OrderHistory from './OrderHistory/OrderHistory';
 import Menu from './Main/Menu';
 
 const RootStack = createStackNavigator(
-    {
+    { 
         MAIN: MainScreen,
         MENU: Menu,
         AUTHENTICATION: Authentication,
@@ -22,7 +22,7 @@ const RootStack = createStackNavigator(
         }
     },
     {
-        initialRountName: 'MENU'
+        initialRountName: 'MAIN'
     },
     
 
