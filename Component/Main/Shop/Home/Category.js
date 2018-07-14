@@ -6,29 +6,23 @@ import {
     collection_item_height, screen_size,
     banner_width, banner_height,
 } from '../../../../Values';
-
+const uri = `http://192.168.56.1:88/api/images/type/`;
 export default class Category extends Component {
     render() {
+        const { types } = this.props;
+        console.log("===== CATEGORY ===== " + types);
         return (
             <View style={styles.container}>
                 <Text style={styles.textStyle}>LIST OF CATEGORY</Text>
                 <View style={{ flex: 1, }}>
                     <Swiper width={banner_width} height={100}>
-                        <TouchableOpacity onPress={() => { this.props.navigation.navigate('LIST_PRODUCT') }}>
-                            <ImageBackground source={require('../../../../Images/Banner/sneaker.jpg')} style={styles.imageStyle} >
-                                <Text>Sneaker2</Text>
-                            </ImageBackground>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { this.props.navigation.navigate('LIST_PRODUCT') }}>
-                            <ImageBackground source={require('../../../../Images/Banner/highheel.jpg')} style={styles.imageStyle} >
-                                <Text>Sneaker</Text>
-                            </ImageBackground>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { this.props.navigation.navigate('LIST_PRODUCT') }}>
-                            <ImageBackground source={require('../../../../Images/Banner/sandals.jpg')} style={styles.imageStyle} >
-                                <Text>Sneaker1</Text>
-                            </ImageBackground>
-                        </TouchableOpacity>
+                        {types.map(e => (
+                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('LIST_PRODUCT') }} key={e.id}>
+                                <ImageBackground source={{ uri: `${uri}${e.image}` }} style={styles.imageStyle} >
+                                    <Text>{e.name}</Text>
+                                </ImageBackground>
+                            </TouchableOpacity>
+                        ))}
                     </Swiper>
                 </View>
             </View >

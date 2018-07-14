@@ -25,7 +25,7 @@ export default class ProductDetail extends Component {
                     <Text style={styles.nameStyle}>Product 's name Product 's name Product 's name</Text>
                     <Text style={styles.priceStyle}>43.000 VNĐ</Text>
                 </View>
-                <Text style={styles.productInfoStyle}>Prosuct infomation Prosuct infomation Prosuct infomation Prosuct infomation Prosuct infomation
+                <Text style={styles.descriptionStyle}>Prosuct infomation Prosuct infomation Prosuct infomation Prosuct infomation Prosuct infomation
                 Prosuct infomation Prosuct infomation Prosuct infomation Prosuct infomation Prosuct infomation
                 </Text>
             </ScrollView>
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    productInfoStyle: {
+    descriptionStyle: {
         padding: 10,
         borderTopWidth: 1,
         borderTopColor: '#d7dbdd',
