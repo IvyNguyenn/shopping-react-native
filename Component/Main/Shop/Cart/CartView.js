@@ -1,33 +1,42 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView, ListView } from 'react-native';
 import {
     layout_color, item_layout_color, shadow_color,
     collection_item_height, screen_size, collection_item_image_height, collection_item_image_width,
-    banner_width, banner_height,
+    banner_width, banner_height, main_text_color, main_color,
 } from '../../../../Values';
+import { createStackNavigator, StackNavigator } from 'react-navigation';
 import CartProduct from './CartProduct';
+import ProductDetail from '../ProductDetail/ProductDetail';
+import global from '../../../global';
 
-
-export default class Search extends Component {
+export default class CartView extends Component {
     render() {
-        var ListProduct = [];
-        for (let i = 0; i < 5; i++) {
-            ListProduct.push(
-                <View style={styles.container}>
-                    <CartProduct navigation={this.props.navigation} />
-                </View>
-            );
-        }
+        const { cartArray } = this.props;
+        console.log('===== CART VIEW ===== ' + cartArray);
         return (
-            <ScrollView>
-                {ListProduct}
-            </ScrollView>
+            <View style={styles.container} >
+                <ListView
+                    dataSource={new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 }).cloneWithRows(cartArray)}
+                    renderRow={(cartItem) => (
+                        <View style={styles.container_list}>
+                            <CartProduct navigation={this.props.navigation} cartItem={cartItem} />
+                        </View>
+                    )}
+                />
+                <TouchableOpacity style={styles.container_checkout_btn}>
+                    <Text style={styles.textStyle}>TOTAL 1000 $ CHECKOUT NOW</Text>
+                </TouchableOpacity>
+            </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
+    },
+    container_list: {
         backgroundColor: item_layout_color,
         margin: 10,
         shadowColor: shadow_color,
@@ -36,15 +45,16 @@ const styles = StyleSheet.create({
         elevation: 4,
         borderRadius: 2,
     },
-    textStyle: {
-        paddingVertical: 10,
-        justifyContent: 'center',
-    },
-    imageStyle: {
-        width: banner_width,
-        height: banner_height,
-        justifyContent: 'center',
+    container_checkout_btn: {
+        height: screen_size.width / 10,
         alignItems: 'center',
+        justifyContent: 'center',
+        marginHorizontal: 10,
+        marginBottom: 10,
+        backgroundColor: main_color,
+    },
+    textStyle: {
+        color: main_text_color,
     },
 });
 

@@ -11,21 +11,23 @@ import ProductItem from './ProductItem';
 export default class ListProduct extends Component {
     render() {
         return (
-            <View style={styles.container}>
-                <View style={styles.header}>
-                    <TouchableOpacity onPress={() => { this.props.navigation.goBack() }}>
-                        <Image source={require('../../../../Images/Icon/icons8_Back_50px_1.png')} style={styles.iconStyle} />
-                    </TouchableOpacity>
-                    <Text style={styles.titleStyle}>Sneakers</Text>
-                    <View style={styles.iconStyle} />
+            <ScrollView>
+                <View style={styles.container}>
+                    <View style={styles.header}>
+                        <TouchableOpacity onPress={() => { this.props.navigation.goBack() }}>
+                            <Image source={require('../../../../Images/Icon/icons8_Back_50px_1.png')} style={styles.iconStyle} />
+                        </TouchableOpacity>
+                        <Text style={styles.titleStyle}>Sneakers</Text>
+                        <View style={styles.iconStyle} />
+                    </View>
+
+                    <ProductItem navigation={this.props.navigation} />
+                    <ProductItem navigation={this.props.navigation} />
+                    <ProductItem navigation={this.props.navigation} />
+                    <ProductItem navigation={this.props.navigation} />
+
                 </View>
-                <ScrollView>
-                    <ProductItem navigation={this.props.navigation} />
-                    <ProductItem navigation={this.props.navigation} />
-                    <ProductItem navigation={this.props.navigation} />
-                    <ProductItem navigation={this.props.navigation} />
-                </ScrollView>
-            </View>
+            </ScrollView>
         );
     }
 }

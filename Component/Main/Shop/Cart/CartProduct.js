@@ -2,41 +2,55 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import {
     layout_color, item_layout_color, shadow_color, main_suptext_color, line_color
-    , screen_size,
+    , screen_size, uri_api_product,
     banner_width, banner_height,
 } from '../../../../Values';
 import ic_plus from '../../../../Images/Icon/icons8_Plus_50px_1.png';
 import ic_sub from '../../../../Images/Icon/icons8_Minus_50px.png';
 import ic_del from '../../../../Images/Icon/icons8_Cancel_50px_1.png';
 
-export default class ProductItem extends Component {
+export default class CartProduct extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            quantity: 1,
+        }
+    }
+    increaseQuantity() {
+        if (cartItem.quantity < 1000)
+            cartItem.quantity += 1;
+    }
+    decreaseQuantity() {
+        if (cartItem.quantity > 1)
+            cartItem.quantity -= 1;
+    }
     render() {
+        const { cartItem } = this.props;
+        console.log('==== CART PRODUCT ===== ' + cartItem);
         return (
             <View style={styles.container}>
-                <Image source={require('../../../../Images/Banner/giay_the_thao.jpg')} style={styles.imageStyle} />
+                <Image source={{ uri: `${uri_api_product}${cartItem.product.images[0]}` }} style={styles.imageStyle} />
                 <View style={{ justifyContent: 'space-between' }}>
                     <View>
                         <View style={styles.containerDelIcon}>
-                            <Text>prosuct 's name</Text>
-                            <View style={{ width: width_boxInfo - 100, flexDirection: 'row', justifyContent: 'flex-end', }}>
-                                <TouchableOpacity>
-                                    <Image source={ic_del} style={styles.iconStyle} />
-                                </TouchableOpacity>
-                            </View>
+                            <Text>{cartItem.product.name.toUpperCase()}</Text>
+                            <TouchableOpacity>
+                                <Image source={ic_del} style={styles.iconStyle} />
+                            </TouchableOpacity>
                         </View>
-                        <Text>0.00 $</Text>
+                        <Text style={{ fontWeight: 'bold' }}>{cartItem.product.price} $</Text>
                     </View>
                     <View style={styles.containerQuantity}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={this.decreaseQuantity.bind(this)}>
                             <Image source={ic_sub} style={styles.iconStyle} />
                         </TouchableOpacity>
-                        <Text>2</Text>
-                        <TouchableOpacity>
+                        <Text>{cartItem.quantity}</Text>
+                        <TouchableOpacity onPress={this.increaseQuantity.bind(this)}>
                             <Image source={ic_plus} style={styles.iconStyle} />
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity onPress={() => { this.props.navigation.navigate('PRODUCT_DETAIL') }} style={styles.containerRight}>
-                        <Text style={styles.showDetailStyle}>SHOW DETAILS</Text>
+                    <TouchableOpacity onPress={() => { this.props.navigation.navigate('PRODUCT_DETAIL', { product: product }) }} style={styles.containerRight}>
+                        {/* <Text style={styles.showDetailStyle}>SHOW DETAILS</Text> */}
                     </TouchableOpacity>
                 </View>
             </View >
@@ -54,6 +68,7 @@ const styles = StyleSheet.create({
     },
     containerDelIcon: {
         flexDirection: 'row',
+        justifyContent: 'space-between',
     },
     containerRight: {
         width: width_boxInfo,

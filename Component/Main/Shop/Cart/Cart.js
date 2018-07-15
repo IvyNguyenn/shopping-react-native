@@ -11,16 +11,18 @@ const RootStack = createStackNavigator(
     },
     {
         headerMode: 'none',
-    },
-    {
-        initialRountName: 'CART_VIEW'
+        initialRountName: 'CART_VIEW',
+        //initialRouteParams: { cartArray: cartArray }
     },
 );
 
 export default class Cart extends Component {
     render() {
+        //const { cartArray } = this.props;
+        //console.log('======= CART ======= '+cartArray);
+        
         return (
-            <RootStack />
+            <View/>
         );
     }
 }

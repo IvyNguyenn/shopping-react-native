@@ -1,5 +1,8 @@
 import { Dimensions } from 'react-native';
 
+export const uri_api_type = `http://192.168.56.1:88/api/images/type/`;
+export const uri_api_product = `http://192.168.56.1:88/api/images/product/`;
+
 export const main_color = '#007ACC';
 export const main_text_color = '#fff';
 export const main_suptext_color = '#c62828';

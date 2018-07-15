@@ -3,31 +3,40 @@ import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'rea
 import {
     layout_color, item_layout_color, shadow_color,
     collection_item_height, screen_size, icon_height, icon_width,
-    banner_width, banner_height, main_suptext_color,
+    banner_width, banner_height, main_suptext_color, uri_api_product,
 } from '../../../../Values';
+import ic_back from '../../../../Images/Icon/icons8_Back_50px_1.png';
+import ic_cart from '../../../../Images/Icon/icons8_Shopping_Cart_50px_3.png';
+import global from '../../../global';
 
 export default class ProductDetail extends Component {
+    addThisProductToCart() {
+        const { product } = this.props.navigation.state.params;
+        global.addProductToCart(product);
+    }
     render() {
+        const { product } = this.props.navigation.state.params;
+        console.log('==== PRODUCT DETAIL ===== '+product);
         return (
             <ScrollView style={styles.container}>
                 <View style={styles.header}>
                     <TouchableOpacity onPress={() => { this.props.navigation.goBack() }}>
-                        <Image source={require('../../../../Images/Icon/icons8_Back_50px_1.png')} style={styles.iconStyle} />
+                        <Image source={ic_back} style={styles.iconStyle} />
                     </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Image source={require('../../../../Images/Icon/icons8_Shopping_Cart_50px_3.png')} style={styles.iconStyle} />
+                    <TouchableOpacity onPress={this.addThisProductToCart.bind(this)}>
+                        <Image source={ic_cart} style={styles.iconStyle} />
                     </TouchableOpacity>
                 </View>
-                <View style={{ alignItems: 'center' }}>
-                    <Image source={require('../../../../Images/Banner/36798876_2280436378663656_37388901492457472_n.jpg')} style={styles.imageStyle} />
+                <View>
+                    <View style={{ alignItems: 'center' }}>
+                        <Image source={{ uri: `${uri_api_product}${product.images[0]}` }} style={styles.imageStyle} />
+                    </View>
+                    <View style={styles.header} >
+                        <Text style={styles.nameStyle}>{product.name.toUpperCase()}</Text>
+                        <Text style={styles.priceStyle}>{product.price} $</Text>
+                    </View>
+                    <Text style={styles.descriptionStyle}>{product.description}</Text>
                 </View>
-                <View style={styles.header} >
-                    <Text style={styles.nameStyle}>Product 's name Product 's name Product 's name</Text>
-                    <Text style={styles.priceStyle}>43.000 VNĐ</Text>
-                </View>
-                <Text style={styles.descriptionStyle}>Prosuct infomation Prosuct infomation Prosuct infomation Prosuct infomation Prosuct infomation
-                Prosuct infomation Prosuct infomation Prosuct infomation Prosuct infomation Prosuct infomation
-                </Text>
             </ScrollView>
         );
     }

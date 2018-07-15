@@ -3,10 +3,10 @@ import { View, Text, Image, ImageBackground, StyleSheet, TouchableOpacity } from
 import Swiper from 'react-native-swiper';
 import {
     layout_color, item_layout_color, shadow_color,
-    collection_item_height, screen_size,
+    collection_item_height, screen_size,uri_api_type,
     banner_width, banner_height,
 } from '../../../../Values';
-const uri = `http://192.168.56.1:88/api/images/type/`;
+
 export default class Category extends Component {
     render() {
         const { types } = this.props;
@@ -16,10 +16,10 @@ export default class Category extends Component {
                 <Text style={styles.textStyle}>LIST OF CATEGORY</Text>
                 <View style={{ flex: 1, }}>
                     <Swiper width={banner_width} height={100}>
-                        {types.map(e => (
-                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('LIST_PRODUCT') }} key={e.id}>
-                                <ImageBackground source={{ uri: `${uri}${e.image}` }} style={styles.imageStyle} >
-                                    <Text>{e.name}</Text>
+                        {types.map(type => (
+                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('LIST_PRODUCT') }} key={type.id}>
+                                <ImageBackground source={{ uri: `${uri_api_type}${type.image}` }} style={styles.imageStyle} >
+                                    <Text>{type.name}</Text>
                                 </ImageBackground>
                             </TouchableOpacity>
                         ))}

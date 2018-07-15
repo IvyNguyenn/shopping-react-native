@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TextInput, Button, Image, Dimensions, TouchableOpacity } from 'react-native';
 import TabNavigator from 'react-native-tab-navigator';
-import Drawer from 'react-native-drawer';
 import { main_color, screen_height } from '../../../Values';
 import ic_home from '../../../Images/Icon/icons8_Home_50px_11.png';
 import ic_home_selected from '../../../Images/Icon/icons8_Home_50px_10.png';
@@ -13,10 +12,11 @@ import ic_contact from '../../../Images/Icon/icons8_User_50px_2.png';
 import ic_contact_selected from '../../../Images/Icon/icons8_User_50px_1.png';
 import Home from './Home/Home';
 import Cart from './Cart/Cart';
+import CartView from './Cart/CartView';
 import Search from './Search/Search';
 import Contact from './Contact/Contact';
 import Header from './Header';
-//const { screen_height } = Dimensions.get('window');
+import global from '../../global';
 
 export default class Shop extends Component {
     openMenu() {
@@ -28,20 +28,34 @@ export default class Shop extends Component {
         this.state = {
             selectedTab: 'Home',
             text: '',
-            types:[],
-        }
+            types: [],
+            products: [],
+            cartArray: [],
+        };
+        global.addProductToCart = this.addProductToCart.bind(this);
+        global.cartList = this.props.cartArray;
     }
-    componentDidMount(){
+
+    componentDidMount() {
         fetch('http://192.168.56.1:88/api/')
-        .then(response => response.json())
-        .then(responseJson => {
-            this.setState({types:responseJson.type});
-        })
-        .catch((error)=>{console.log("errorrrrrrrrrrrrrrrrrrrrrr"+error)});
+            .then(response => response.json())
+            .then(responseJson => {
+                this.setState({
+                    types: responseJson.type,
+                    products: responseJson.product,
+                });
+            })
+            .catch((error) => { console.log("error ======== SHOP " + error) });
+    }
+
+    addProductToCart(product) {
+        this.setState({
+            cartArray: this.state.cartArray.concat({ product, quantity: 1 })
+        });
     }
 
     render() {
-        const {types, selectedTab} = this.state;
+        const { types, selectedTab, products, cartArray } = this.state;
         return (
             <View style={{ flex: 1, }}>
                 <Header onOpenMenu={this.openMenu.bind(this)} />
@@ -53,17 +67,17 @@ export default class Shop extends Component {
                         renderSelectedIcon={() => <Image source={ic_home_selected} style={styles.iconStyle} />}
                         selectedTitleStyle={{ color: main_color }}
                         onPress={() => this.setState({ selectedTab: 'Home' })}>
-                        <Home types = {types}/>
+                        <Home types={types} products={products} />
                     </TabNavigator.Item>
                     <TabNavigator.Item
                         selected={selectedTab === 'Cart'}
                         title="Cart"
                         renderIcon={() => <Image source={ic_cart} style={styles.iconStyle} />}
                         renderSelectedIcon={() => <Image source={ic_cart_selected} style={styles.iconStyle} />}
-                        badgeText="99"
+                        badgeText={cartArray.length}
                         selectedTitleStyle={{ color: main_color }}
                         onPress={() => this.setState({ selectedTab: 'Cart' })}>
-                        <Cart />
+                        <CartView cartArray={cartArray} />
                     </TabNavigator.Item>
                     <TabNavigator.Item
                         selected={selectedTab === 'Search'}
