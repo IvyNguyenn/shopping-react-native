@@ -17,6 +17,8 @@ import Search from './Search/Search';
 import Contact from './Contact/Contact';
 import Header from './Header';
 import global from '../../global';
+import saveCart from '../../../api/SaveCart';
+import getCart from '../../../api/GetCart';
 
 export default class Shop extends Component {
     openMenu() {
@@ -46,12 +48,15 @@ export default class Shop extends Component {
                 });
             })
             .catch((error) => { console.log("error ======== SHOP " + error) });
+        getCart()
+            .then(cartArray => this.setState({ cartArray }));
     }
 
     addProductToCart(product) {
-        this.setState({
-            cartArray: this.state.cartArray.concat({ product, quantity: 1 })
-        });
+        this.setState(
+            { cartArray: this.state.cartArray.concat({ product, quantity: 1 }) },
+            () => saveCart(this.state.cartArray)
+        );
     }
 
     render() {

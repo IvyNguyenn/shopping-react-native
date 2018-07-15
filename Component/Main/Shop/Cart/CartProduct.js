@@ -17,12 +17,8 @@ export default class CartProduct extends Component {
         }
     }
     increaseQuantity() {
-        if (cartItem.quantity < 1000)
-            cartItem.quantity += 1;
     }
     decreaseQuantity() {
-        if (cartItem.quantity > 1)
-            cartItem.quantity -= 1;
     }
     render() {
         const { cartItem } = this.props;
