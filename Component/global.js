@@ -1,4 +1,8 @@
 module.exports = {
     addProductToCart: null,
-    cartList:[],
+    removeProductFromCart:null,
+    increaseQuantity:null,
+    decreaseQuantity:null,
+    updateCartView:null,
+    updateBadge:null,
 };

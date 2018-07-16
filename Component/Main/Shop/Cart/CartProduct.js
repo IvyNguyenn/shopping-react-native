@@ -8,6 +8,7 @@ import {
 import ic_plus from '../../../../Images/Icon/icons8_Plus_50px_1.png';
 import ic_sub from '../../../../Images/Icon/icons8_Minus_50px.png';
 import ic_del from '../../../../Images/Icon/icons8_Cancel_50px_1.png';
+import global from '../../../global';
 
 export default class CartProduct extends Component {
     constructor(props) {
@@ -16,9 +17,15 @@ export default class CartProduct extends Component {
             quantity: 1,
         }
     }
-    increaseQuantity() {
+    increaseQuantity(id) {
+        global.increaseQuantity(id);
     }
-    decreaseQuantity() {
+    decreaseQuantity(id) {
+        global.decreaseQuantity(id);
+    }
+
+    removeProductFromCart(id) {
+        global.removeProductFromCart(id);
     }
     render() {
         const { cartItem } = this.props;
@@ -30,23 +37,23 @@ export default class CartProduct extends Component {
                     <View>
                         <View style={styles.containerDelIcon}>
                             <Text>{cartItem.product.name.toUpperCase()}</Text>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => this.removeProductFromCart(cartItem.product.id)}>
                                 <Image source={ic_del} style={styles.iconStyle} />
                             </TouchableOpacity>
                         </View>
                         <Text style={{ fontWeight: 'bold' }}>{cartItem.product.price} $</Text>
                     </View>
                     <View style={styles.containerQuantity}>
-                        <TouchableOpacity onPress={this.decreaseQuantity.bind(this)}>
+                        <TouchableOpacity onPress={() => this.decreaseQuantity(cartItem.product.id)}>
                             <Image source={ic_sub} style={styles.iconStyle} />
                         </TouchableOpacity>
                         <Text>{cartItem.quantity}</Text>
-                        <TouchableOpacity onPress={this.increaseQuantity.bind(this)}>
+                        <TouchableOpacity onPress={() => this.increaseQuantity(cartItem.product.id)}>
                             <Image source={ic_plus} style={styles.iconStyle} />
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity onPress={() => { this.props.navigation.navigate('PRODUCT_DETAIL', { product: product }) }} style={styles.containerRight}>
-                        {/* <Text style={styles.showDetailStyle}>SHOW DETAILS</Text> */}
+                    <TouchableOpacity onPress={() => { this.props.navigation.navigate('PRODUCT_DETAIL', { product: cartItem.product }) }} style={styles.containerRight}>
+                        <Text style={styles.showDetailStyle}>SHOW DETAILS</Text>
                     </TouchableOpacity>
                 </View>
             </View >

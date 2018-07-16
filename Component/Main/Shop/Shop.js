@@ -34,9 +34,50 @@ export default class Shop extends Component {
             products: [],
             cartArray: [],
         };
+        global.updateBadge = this.updateBadge.bind(this);
         global.addProductToCart = this.addProductToCart.bind(this);
-        global.cartList = this.props.cartArray;
+        // global.removeProductFromCart = this.removeProductFromCart.bind(this);
+        // global.increaseQuantity = this.increaseQuantity.bind(this);
+        // global.decreaseQuantity = this.decreaseQuantity.bind(this);
     }
+    addProductToCart = async (product) => {
+        await this.setState(
+            { cartArray: this.state.cartArray.concat({ product, quantity: 1 }) },
+            () => saveCart(this.state.cartArray)
+        );
+    }
+    updateBadge() {
+        getCart()
+            .then(cartArray => this.setState({ cartArray }));
+        console.log(' updating Badge --------');
+    }
+    // removeProductFromCart(productId) {
+    //     const newCart = this.state.cartArray.filter(p => p.product.id !== productId);
+    //     this.setState(
+    //         { cartArray: newCart },
+    //         () => saveCart(this.state.cartArray)
+    //     );
+    // }
+    // increaseQuantity(productId) {
+    //     const newCart = this.state.cartArray.map(p => {
+    //         if (p.product.id !== productId) return p;
+    //         return { product: p.product, quantity: p.quantity + 1 }
+    //     });
+    //     this.setState(
+    //         { cartArray: newCart },
+    //         () => saveCart(this.state.cartArray)
+    //     );
+    // }
+    // decreaseQuantity(productId) {
+    //     const newCart = this.state.cartArray.map(p => {
+    //         if (p.product.id !== productId || p.quantity < 2) return p;
+    //         return { product: p.product, quantity: p.quantity - 1 }
+    //     });
+    //     this.setState(
+    //         { cartArray: newCart },
+    //         () => saveCart(this.state.cartArray)
+    //     );
+    // }
 
     componentDidMount() {
         fetch('http://192.168.56.1:88/api/')
@@ -50,13 +91,6 @@ export default class Shop extends Component {
             .catch((error) => { console.log("error ======== SHOP " + error) });
         getCart()
             .then(cartArray => this.setState({ cartArray }));
-    }
-
-    addProductToCart(product) {
-        this.setState(
-            { cartArray: this.state.cartArray.concat({ product, quantity: 1 }) },
-            () => saveCart(this.state.cartArray)
-        );
     }
 
     render() {
@@ -82,7 +116,7 @@ export default class Shop extends Component {
                         badgeText={cartArray.length}
                         selectedTitleStyle={{ color: main_color }}
                         onPress={() => this.setState({ selectedTab: 'Cart' })}>
-                        <CartView cartArray={cartArray} />
+                        <Cart cartArray={cartArray} />
                     </TabNavigator.Item>
                     <TabNavigator.Item
                         selected={selectedTab === 'Search'}

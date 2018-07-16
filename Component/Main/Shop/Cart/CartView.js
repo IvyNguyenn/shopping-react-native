@@ -9,10 +9,56 @@ import { createStackNavigator, StackNavigator } from 'react-navigation';
 import CartProduct from './CartProduct';
 import ProductDetail from '../ProductDetail/ProductDetail';
 import global from '../../../global';
+import getCart from '../../../../api/GetCart';
+import saveCart from '../../../../api/SaveCart';
 
 export default class CartView extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            cartArray: [],
+        };
+        // global.addProductToCart = this.addProductToCart.bind(this);
+        global.removeProductFromCart = this.removeProductFromCart.bind(this);
+        global.increaseQuantity = this.increaseQuantity.bind(this);
+        global.decreaseQuantity = this.decreaseQuantity.bind(this);
+    }
+    // addProductToCart(product) {
+    //     this.setState(
+    //         { cartArray: this.state.cartArray.concat({ product, quantity: 1 }) },
+    //         () => saveCart(this.state.cartArray)
+    //     );
+    // }
+    removeProductFromCart = async (productId) => {
+        const newCart = this.state.cartArray.filter(p => p.product.id !== productId);
+        await this.setState(
+            { cartArray: newCart },
+            () => saveCart(this.state.cartArray)
+        );
+        global.updateBadge();
+    }
+    increaseQuantity(productId) {
+        const newCart = this.state.cartArray.map(p => {
+            if (p.product.id !== productId) return p;
+            return { product: p.product, quantity: p.quantity + 1 }
+        });
+        this.setState(
+            { cartArray: newCart },
+            () => saveCart(this.state.cartArray)
+        );
+    }
+    decreaseQuantity(productId) {
+        const newCart = this.state.cartArray.map(p => {
+            if (p.product.id !== productId || p.quantity < 2) return p;
+            return { product: p.product, quantity: p.quantity - 1 }
+        });
+        this.setState(
+            { cartArray: newCart },
+            () => saveCart(this.state.cartArray)
+        );
+    }
     render() {
-        const { cartArray } = this.props;
+        const { cartArray } = this.state;
         console.log('===== CART VIEW ===== ' + cartArray);
         return (
             <View style={styles.container} >
@@ -29,6 +75,10 @@ export default class CartView extends Component {
                 </TouchableOpacity>
             </View>
         );
+    }
+    componentDidMount() {
+        getCart()
+            .then(cartArray => this.setState({ cartArray }));
     }
 }
 

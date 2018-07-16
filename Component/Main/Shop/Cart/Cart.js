@@ -22,7 +22,7 @@ export default class Cart extends Component {
         //console.log('======= CART ======= '+cartArray);
         
         return (
-            <View/>
+            <RootStack/>
         );
     }
 }

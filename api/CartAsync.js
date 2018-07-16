@@ -11,13 +11,16 @@ const saveCart = async (cartArray)=>{
 
 const getCart = async ()=>{
     try{
-        const cartArray = AsyncStorage.getItem('KEY:CARTS');
-        console.log('------ GOT CART ------');
-        return cartArray ? [] : cartArray;
+        const cartArray = await AsyncStorage.getItem('KEY:CARTS');
+        console.log('------ GOT CART ------ '+cartArray);
+        if(cartArray !== null){
+            return JSON.parse(cartArray);
+        }
     }catch(error){
         console.log(error);
+        return [];
     }
 }
 
-export default saveCart;
 export default getCart;
+export default saveCart;
