@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView, ListView } from 'react-native';
+import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView, ListView ,Alert} from 'react-native';
 import {
     layout_color, item_layout_color, shadow_color,
     collection_item_height, screen_size, collection_item_image_height, collection_item_image_width,
@@ -11,55 +11,24 @@ import ProductDetail from '../ProductDetail/ProductDetail';
 import global from '../../../global';
 import getCart from '../../../../api/GetCart';
 import saveCart from '../../../../api/SaveCart';
+import Shop from '../Header';
 
 export default class CartView extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            cartArray: [],
-        };
-        // global.addProductToCart = this.addProductToCart.bind(this);
-        global.removeProductFromCart = this.removeProductFromCart.bind(this);
-        global.increaseQuantity = this.increaseQuantity.bind(this);
-        global.decreaseQuantity = this.decreaseQuantity.bind(this);
-    }
-    // addProductToCart(product) {
-    //     this.setState(
-    //         { cartArray: this.state.cartArray.concat({ product, quantity: 1 }) },
-    //         () => saveCart(this.state.cartArray)
-    //     );
-    // }
-    removeProductFromCart = async (productId) => {
-        const newCart = this.state.cartArray.filter(p => p.product.id !== productId);
-        await this.setState(
-            { cartArray: newCart },
-            () => saveCart(this.state.cartArray)
-        );
-        global.updateBadge();
-    }
-    increaseQuantity(productId) {
-        const newCart = this.state.cartArray.map(p => {
-            if (p.product.id !== productId) return p;
-            return { product: p.product, quantity: p.quantity + 1 }
-        });
-        this.setState(
-            { cartArray: newCart },
-            () => saveCart(this.state.cartArray)
-        );
-    }
-    decreaseQuantity(productId) {
-        const newCart = this.state.cartArray.map(p => {
-            if (p.product.id !== productId || p.quantity < 2) return p;
-            return { product: p.product, quantity: p.quantity - 1 }
-        });
-        this.setState(
-            { cartArray: newCart },
-            () => saveCart(this.state.cartArray)
-        );
-    }
     render() {
-        const { cartArray } = this.state;
+        const { cartArray } = this.props;
         console.log('===== CART VIEW ===== ' + cartArray);
+        if (cartArray.length === 0) {
+            console.log('---- empty cart -------- '+cartArray.length);
+            Alert.alert(
+                'Warning',
+                'Empty cart',
+                [
+                  {text: 'Go Shopping', onPress: () => console.log('OK Pressed')},
+                ],
+              )
+        }
+        const priceArray = cartArray.map(cartItem => cartItem.product.price * cartItem.quantity);
+        const totalPrice = priceArray.reduce((total, price) => { return total += price }, 0);
         return (
             <View style={styles.container} >
                 <ListView
@@ -71,14 +40,10 @@ export default class CartView extends Component {
                     )}
                 />
                 <TouchableOpacity style={styles.container_checkout_btn}>
-                    <Text style={styles.textStyle}>TOTAL 1000 $ CHECKOUT NOW</Text>
+                    <Text style={styles.textStyle}>TOTAL {totalPrice} $ CHECKOUT NOW</Text>
                 </TouchableOpacity>
             </View>
         );
-    }
-    componentDidMount() {
-        getCart()
-            .then(cartArray => this.setState({ cartArray }));
     }
 }
 

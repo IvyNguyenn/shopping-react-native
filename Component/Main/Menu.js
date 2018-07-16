@@ -7,7 +7,7 @@ export default class Menu extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLogin: true,
+            isLogin: false,
         }
     }
     render() {

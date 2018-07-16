@@ -35,7 +35,7 @@ export default class HomeView extends Component {
                     types: responseJson.type,
                     products: responseJson.product,
                 });
-                console.log("====== HV ===== "+this.state.types);
+                console.log("====== Home View Did Mount ===== "+this.state.types);
             })
             .catch((error) => { console.log("error ========= HOME VIEW " + error) });
     }

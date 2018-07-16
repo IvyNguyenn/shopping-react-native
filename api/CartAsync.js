@@ -22,5 +22,7 @@ const getCart = async ()=>{
     }
 }
 
-export default getCart;
-export default saveCart;
+module.exports={
+    getCart,
+    saveCart
+}

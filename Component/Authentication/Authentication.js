@@ -3,12 +3,17 @@ import { View, Text, StyleSheet, TextInput, Button, TouchableOpacity, Image, } f
 import { main_color, main_text_color, app_name, icon_height, icon_width, screen_size } from '../../Values';
 import ic_logo from '../../Images/Icon/icons8_Trainers_50px_1.png';
 import ic_back from '../../Images/Icon/icons8_Back_50px.png';
+import Register from '../../api/Register';
 
 export default class Authentication extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            text: '',
+            email: '',
+            name: '',
+            password: '',
+            phone: '',
+            address: '',
             isSigin: true,
         }
     }
@@ -20,20 +25,21 @@ export default class Authentication extends Component {
     SignUp() {
         this.setState({ isSigin: false });
     }
-
+    componentDidMount() {
+    }
     render() {
         const SignInJSX = (
             <View >
                 <TextInput
                     style={styles.textInputStyle}
                     placeholder='Enter your email'
-                    onChangeText={(text) => this.setState({ text })}
+                    onChangeText={(email) => this.setState({ email })}
                     value={this.state.text}
                 />
                 <TextInput
                     style={styles.textInputStyle}
                     placeholder='Enter your password'
-                    onChangeText={(text) => this.setState({ text })}
+                    onChangeText={(password) => this.setState({ password })}
                     value={this.state.text}
                 />
                 <TouchableOpacity>
@@ -46,25 +52,31 @@ export default class Authentication extends Component {
                 <TextInput
                     style={styles.textInputStyle}
                     placeholder='Enter your email'
-                    onChangeText={(text) => this.setState({ text })}
+                    onChangeText={(email) => this.setState({ email })}
+                    value={this.state.text}
+                />
+                <TextInput
+                    style={styles.textInputStyle}
+                    placeholder='Enter your name'
+                    onChangeText={(name) => this.setState({ name })}
                     value={this.state.text}
                 />
                 <TextInput
                     style={styles.textInputStyle}
                     placeholder='Enter your password'
-                    onChangeText={(text) => this.setState({ text })}
+                    onChangeText={(password) => this.setState({ password })}
                     value={this.state.text}
                 />
                 <TextInput
                     style={styles.textInputStyle}
-                    placeholder='Enter your password'
-                    onChangeText={(text) => this.setState({ text })}
+                    placeholder='Enter your phone'
+                    onChangeText={(phone) => this.setState({ phone })}
                     value={this.state.text}
                 />
                 <TextInput
                     style={styles.textInputStyle}
-                    placeholder='Enter your password'
-                    onChangeText={(text) => this.setState({ text })}
+                    placeholder='Enter your address'
+                    onChangeText={(address) => this.setState({ address })}
                     value={this.state.text}
                 />
                 <TouchableOpacity>

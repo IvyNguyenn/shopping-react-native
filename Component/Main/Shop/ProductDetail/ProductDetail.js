@@ -13,7 +13,6 @@ export default class ProductDetail extends Component {
     addThisProductToCart() {
         const { product } = this.props.navigation.state.params;
         global.addProductToCart(product);
-        //global.updateBadge();
     }
     render() {
         const { product } = this.props.navigation.state.params;
