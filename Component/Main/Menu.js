@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Button, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
 import { main_color, app_name, light_gray } from '../../Values';
 import avatar from '../../Images/Icon/icons8_User_50px_2.png';
+import global from '../global';
 
 export default class Menu extends Component {
     constructor(props) {
@@ -9,6 +10,14 @@ export default class Menu extends Component {
         this.state = {
             isLogin: false,
         }
+        global.onSignIn = this.onSignIn.bind(this);
+        global.onSignOut = this.onSignOut.bind(this);
+    }
+    onSignIn() {
+        this.setState({ isLogin: true });
+    }
+    onSignOut() {
+        this.setState({ isLogin: false });
     }
     render() {
         const LogoutJSX = (

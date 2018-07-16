@@ -17,7 +17,7 @@ export default class TopProduct extends Component {
                     dataSource={new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 }).cloneWithRows(topProducts)}
                     renderRow={product => (
                         <TouchableOpacity onPress={() => { this.props.navigation.navigate('PRODUCT_DETAIL', { product: product }) }} style={styles.container2}>
-                            <Image source={{ uri: `${uri_api_product}${product.images[0]}` }} style={styles.imageStyle} />
+                            <Image source={{ uri: `${uri_api_product}${product.images[1]}` }} style={styles.imageStyle} />
                             <Text style={styles.productName}>{product.name.toUpperCase()}</Text>
                             <Text style={styles.productPrice}>{product.price} $</Text>
                         </TouchableOpacity>

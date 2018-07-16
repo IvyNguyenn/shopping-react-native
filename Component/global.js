@@ -5,4 +5,6 @@ module.exports = {
     decreaseQuantity:null,
     updateCartView:null,
     updateBadge:null,
+    onSignIn:null,
+    onSignOut:null,
 };

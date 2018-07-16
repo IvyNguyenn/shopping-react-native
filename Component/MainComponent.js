@@ -10,7 +10,6 @@ import Menu from './Main/Menu';
 const RootStack = createStackNavigator(
     { 
         MAIN: MainScreen,
-        MENU: Menu,
         AUTHENTICATION: Authentication,
         CHANGE_INFO: ChangeInfo,
         ORDER_HISTORY: OrderHistory,

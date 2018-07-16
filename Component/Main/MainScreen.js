@@ -13,7 +13,7 @@ import Header from '../Main/Shop/Header'
 const { screen_height } = Dimensions.get('window');
 
 export default class MainScreen extends Component {
-    
+
     closeControlPanel = () => {
         this._drawer.close()
     };
@@ -21,32 +21,18 @@ export default class MainScreen extends Component {
         this._drawer.open()
     };
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            selectedTab: 'Home',
-        }
-    }
-
     render() {
-        const {navigation} = this.props;
+        const { navigation } = this.props;
         return (
-            <View style={{ flex: 1 }}>
-                <Drawer
-                    openDrawerOffset={0.4}
-                    tapToClose={true}
-                    ref={(ref) => this._drawer = ref}
-                    content={
-                        <Menu navigation = {navigation}/>
-                    }
-                >
-
-                    {/* main view */}
-                    <View style={{ flex: 1, }}>
-                        <Shop open={this.openControlPanel}/>
-                    </View>
-                </Drawer>
-            </View>
+            <Drawer
+                openDrawerOffset={0.4}
+                tapToClose={true}
+                ref={(ref) => this._drawer = ref}
+                content={<Menu navigation={navigation} />}
+            >
+                {/* main view */}
+                <Shop open={this.openControlPanel} />
+            </Drawer>
         );
     }
 }

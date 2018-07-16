@@ -4,6 +4,9 @@ import { main_color, main_text_color, app_name, icon_height, icon_width, screen_
 import ic_logo from '../../Images/Icon/icons8_Trainers_50px_1.png';
 import ic_back from '../../Images/Icon/icons8_Back_50px.png';
 import Register from '../../api/Register';
+import global from '../global';
+import SignIn from './SignIn';
+import SignUp from './SignUp';
 
 export default class Authentication extends Component {
     constructor(props) {
@@ -16,8 +19,9 @@ export default class Authentication extends Component {
             address: '',
             isSigin: true,
         }
+        global.onSignOut();
     }
-
+    
     SignIn() {
         this.setState({ isSigin: true });
     }
@@ -25,66 +29,8 @@ export default class Authentication extends Component {
     SignUp() {
         this.setState({ isSigin: false });
     }
-    componentDidMount() {
-    }
     render() {
-        const SignInJSX = (
-            <View >
-                <TextInput
-                    style={styles.textInputStyle}
-                    placeholder='Enter your email'
-                    onChangeText={(email) => this.setState({ email })}
-                    value={this.state.text}
-                />
-                <TextInput
-                    style={styles.textInputStyle}
-                    placeholder='Enter your password'
-                    onChangeText={(password) => this.setState({ password })}
-                    value={this.state.text}
-                />
-                <TouchableOpacity>
-                    <Text style={styles.signInBtnStyle}>SIGN IN NOW</Text>
-                </TouchableOpacity>
-            </View>
-        );
-        const SignUpJSX = (
-            <View >
-                <TextInput
-                    style={styles.textInputStyle}
-                    placeholder='Enter your email'
-                    onChangeText={(email) => this.setState({ email })}
-                    value={this.state.text}
-                />
-                <TextInput
-                    style={styles.textInputStyle}
-                    placeholder='Enter your name'
-                    onChangeText={(name) => this.setState({ name })}
-                    value={this.state.text}
-                />
-                <TextInput
-                    style={styles.textInputStyle}
-                    placeholder='Enter your password'
-                    onChangeText={(password) => this.setState({ password })}
-                    value={this.state.text}
-                />
-                <TextInput
-                    style={styles.textInputStyle}
-                    placeholder='Enter your phone'
-                    onChangeText={(phone) => this.setState({ phone })}
-                    value={this.state.text}
-                />
-                <TextInput
-                    style={styles.textInputStyle}
-                    placeholder='Enter your address'
-                    onChangeText={(address) => this.setState({ address })}
-                    value={this.state.text}
-                />
-                <TouchableOpacity>
-                    <Text style={styles.signInBtnStyle}>SIGN UP NOW</Text>
-                </TouchableOpacity>
-            </View>
-        );
-        const mainJSX = this.state.isSigin ? SignInJSX : SignUpJSX;
+        const mainJSX = this.state.isSigin ? <SignIn /> : <SignUp />;
         return (
             < View style={styles.container}>
                 <View style={styles.hearder}>
@@ -127,25 +73,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginBottom: 5,
-    },
-    textInputStyle: {
-        height: 40,
-        backgroundColor: main_text_color,
-        borderColor: main_text_color,
-        borderWidth: 1,
-        borderRadius: 15,
-        marginVertical: 10,
-        paddingLeft: 20,
-    },
-    signInBtnStyle: {
-        height: 40,
-        color: main_text_color,
-        borderColor: main_text_color,
-        borderWidth: 1,
-        borderRadius: 15,
-        marginVertical: 10,
-        padding: 10,
-        paddingLeft: (screen_size.width - 40) / 2.6,
     },
     iconStyle: {
         width: icon_width,
