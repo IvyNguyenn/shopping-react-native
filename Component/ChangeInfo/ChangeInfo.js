@@ -6,13 +6,24 @@ import {
     banner_width, banner_height, icon_height, icon_width, main_color, main_suptext_color, main_text_color,
 } from '../../Values';
 import ic_menu from '../../Images/Icon/icons8_Back_50px.png';
+import avatar from '../../Images/Banner/user.png';
 
 export default class ChangeInfo extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            text: '',
+            name: '',
+            address: '',
+            phone: '',
         }
+    }
+    componentDidMount() {
+        const { user } = this.props.navigation.state.params;
+        this.setState({
+            name: user.name,
+            address: user.address,
+            phone: user.phone,
+        });
     }
     render() {
         return (
@@ -23,24 +34,27 @@ export default class ChangeInfo extends Component {
                     </TouchableOpacity>
                     <Text style={styles.titleStyle}>USER INFOMATION</Text>
                 </View>
+                <View style={styles.containerImage}>
+                    <Image source={avatar} style={styles.imageStyle} />
+                </View>
                 <View style={styles.containerForm}>
                     <TextInput
                         style={styles.textInputStyle}
                         placeholder='Enter your name'
-                        onChangeText={(text) => this.setState({ text })}
-                        value={this.state.text}
+                        onChangeText={(name) => this.setState({ name })}
+                        value={this.state.name}
                     />
                     <TextInput
                         style={styles.textInputStyle}
                         placeholder='Enter your address'
-                        onChangeText={(text) => this.setState({ text })}
-                        value={this.state.text}
+                        onChangeText={(address) => this.setState({ address })}
+                        value={this.state.address}
                     />
                     <TextInput
                         style={styles.textInputStyle}
                         placeholder='Enter your phone number'
-                        onChangeText={(text) => this.setState({ text })}
-                        value={this.state.text}
+                        onChangeText={(phone) => this.setState({ phone })}
+                        value={this.state.phone}
                     />
                     <TouchableOpacity>
                         <Text style={styles.signInBtnStyle}>UP DATE INFOMATION</Text>
@@ -59,6 +73,11 @@ const styles = StyleSheet.create({
         flex: 1,
         marginHorizontal: 20,
         justifyContent: 'center',
+    },
+    containerImage:{
+        flex:0.5,
+        alignItems: 'center',
+        justifyContent:'center',
     },
     hearder: {
         flexDirection: 'row',
@@ -93,5 +112,12 @@ const styles = StyleSheet.create({
         marginVertical: 10,
         padding: 10,
         paddingLeft: (screen_size.width - 40) / 3.3,
+    },
+    imageStyle: {
+        width: 150,
+        height: 150,
+        borderColor: 'white',
+        borderRadius: 100,
+        borderWidth: 0.8,
     },
 });

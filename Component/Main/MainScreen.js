@@ -3,15 +3,14 @@ import { View, Text, StyleSheet, Button, Image, Dimensions, TouchableOpacity } f
 import TabNavigator from 'react-native-tab-navigator';
 import Drawer from 'react-native-drawer';
 import { main_color, app_name, } from '../../Values';
-import ic_logo from '../../Images/Icon/icons8_Trainers_50px_1.png';
-import ic_menu from '../../Images/Icon/icons8_Menu_50px_1.png';
-import HomeScreen from './HomeScreen';
 import Menu from './Menu';
-import Shop from './Shop/Shop'
-import Header from '../Main/Shop/Header'
+import Shop from './Shop/Shop';
+import CheckLogin from '../../api/CheckLogin';
+import GetToken from '../../api/GetToken';
+import global from '../global';
 
 const { screen_height } = Dimensions.get('window');
-
+const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InZ5MTIzQGdtYWlsLmNvbSIsImlhdCI6MTUzMTc1NTAyNywiZXhwaXJlIjoxNTMxOTI3ODI3fQ.NC3UqU9I1UpfGDo4_XEw_THpSFH3TpaSE2HeBrEyWvI';
 export default class MainScreen extends Component {
 
     closeControlPanel = () => {
@@ -20,7 +19,13 @@ export default class MainScreen extends Component {
     openControlPanel = () => {
         this._drawer.open()
     };
-
+    componentDidMount() {
+        GetToken()
+            .then(token => CheckLogin(token))
+            .then(res => global.onSignIn(res.user))
+            .catch(error => console.log(" CHECK TOKEN ERROR " + error))
+        console.log("GET TOKEN 2 =========");
+    }
     render() {
         const { navigation } = this.props;
         return (

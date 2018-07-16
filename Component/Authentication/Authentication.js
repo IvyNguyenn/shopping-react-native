@@ -29,13 +29,17 @@ export default class Authentication extends Component {
     SignUp() {
         this.setState({ isSigin: false });
     }
+    goBackToMain(){
+        const {navigation} = this.props;
+        navigation.goBack();
+    }
     render() {
-        const mainJSX = this.state.isSigin ? <SignIn /> : <SignUp />;
+        const mainJSX = this.state.isSigin ? <SignIn goBackToMain={this.goBackToMain.bind(this)}/> : <SignUp />;
         return (
             < View style={styles.container}>
                 <View style={styles.hearder}>
                     <View style={styles.hearder2}>
-                        <TouchableOpacity onPress={() => { this.props.navigation.goBack() }}>
+                        <TouchableOpacity onPress={this.goBackToMain.bind(this)}>
                             <Image style={styles.iconStyle} source={ic_back} />
                         </TouchableOpacity>
                         <Text style={styles.titleStyle}>{app_name}</Text>

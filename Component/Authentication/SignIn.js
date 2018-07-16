@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, TextInput, Button, TouchableOpacity, Image, } f
 import { main_color, main_text_color, app_name, icon_height, icon_width, screen_size } from '../../Values';
 import Login from '../../api/Login';
 import global from '../global';
+import GetToken from '../../api/GetToken';
+import SaveToken from '../../api/SaveToken';
 
 export default class Authentication extends Component {
     constructor(props) {
@@ -14,12 +16,17 @@ export default class Authentication extends Component {
     }
     signIn() {
         const { email, password } = this.state;
-        Login(email,password)
-            .then(res => {
-                console.log('response sign in ======== '+res);
-                if(res === 'SAI_THONG_TIN_DANG_NHAP') return global.onSignOut();
-                global.onSignIn();
+        Login(email, password)
+            .then(response => {
+                console.log('response sign in ======== ' + response);
+                if (response === 'SAI_THONG_TIN_DANG_NHAP') return global.onSignOut();
+                global.onSignIn(response.user);
+                SaveToken(response.token);
+                this.props.goBackToMain();
             });
+    }
+    componentDidMount(){
+        
     }
     render() {
         return (
