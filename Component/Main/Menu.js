@@ -3,6 +3,7 @@ import { View, Button, StyleSheet, Image, Text, TouchableOpacity } from 'react-n
 import { main_color, app_name, light_gray } from '../../Values';
 import avatar from '../../Images/Banner/user.png';
 import global from '../global';
+import RemoveToken from '../../api/RemoveToken';
 
 export default class Menu extends Component {
     constructor(props) {
@@ -18,6 +19,8 @@ export default class Menu extends Component {
     }
     onSignOut() {
         this.setState({ user: null });
+        RemoveToken()
+            .catch(error => console.log("REMOVE TOKEN ERROR " + error));
     }
     render() {
         const LogoutJSX = (
@@ -41,7 +44,7 @@ export default class Menu extends Component {
                     <TouchableOpacity onPress={() => this.props.navigation.navigate("CHANGE_INFO", { user: this.state.user })}>
                         <Text style={styles.textButtonStyle}>Change info</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { this.props.navigation.navigate('AUTHENTICATION') }}>
+                    <TouchableOpacity onPress={this.onSignOut.bind(this)}>
                         <Text style={styles.textButtonStyle}>Sign out</Text>
                     </TouchableOpacity>
                 </View>
